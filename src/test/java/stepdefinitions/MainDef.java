@@ -9,6 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.LoginPage;
+import utils.Base;
 
 public class MainDef {
 
@@ -23,43 +24,52 @@ public class MainDef {
 		String actResult = driver.getCurrentUrl();
 		Assert.assertEquals(actResult, expResult);
 	}
-	
-	//scenario_01
+
 	@When("the user enters a invalid phone number")
 	public void the_user_enters_a_invalid_phone_number() {
 		loginPage = new LoginPage(driver, extTest);
 		loginPage.clickLogin();
-		loginPage.enterMobileNumber("8ed3d456");
-	}
-	@Then("an error message {string} should be shown")
-	public void an_error_message_should_be_shown1(String string) {
-		
+		loginPage.enterMobileNumber("5763394");
+		loginPage.clickContinue();
 	}
 	
-	//scenario_02
-	@When("the user enters a valid phone number and invalid OTP")
-	public void the_user_enters_a_valid_phone_number_and_invalid_otp() {
-		loginPage = new LoginPage(driver, extTest);
-		loginPage.clickLogin();
-		loginPage.enterMobileNumber("8967322456");
-		loginPage.enterOtp("573852");
-	}
-	@Then("an error message {string} should be shown")
-	public void an_error_message_should_be_shown(String string) {
-	    
+	@Then("an invalid number message should be shown")
+	public void an_invalid_number_message_should_be_shown() {
+		boolean actualError = loginPage.getNumErrorMessage();
+        Assert.assertTrue(actualError);
 	}
 
-	//scenario_03
-	@When("the user enters a valid phone number and OTP")
-	public void the_user_enters_a_valid_phone_number_and_otp() {
+	@When("the user enters a valid phone number")
+	public void the_user_enters_a_valid_phone_number() {
 		loginPage = new LoginPage(driver, extTest);
 		loginPage.clickLogin();
-		loginPage.enterMobileNumber("8967322456");
+		loginPage.enterMobileNumber("7812886595");  
+	}
+	
+	@When("the user enters the invalid OTP")
+	public void the_user_enters_the_invalid_otp() {
+		loginPage.enterOtp("573852");
+		loginPage.clickContinue();
+	}
+	
+	@Then("an invalid otp message should be shown")
+	public void an_invalid_otp_message_should_be_shown() {
+		boolean actualError = loginPage.getOtpErrorMessage();
+        Assert.assertTrue(actualError);
+	}
+
+	@When("the user enters the valid OTP")
+	public void the_user_enters_the_valid_otp() {
+		loginPage.enterOtpManually(driver); 
+		Base.sleep();
+		loginPage.clickContinue();
+		Base.sleep();
 	}
 
 	@Then("the user should be logged in successfully")
 	public void the_user_should_be_logged_in_successfully() {
-		
+		boolean actualError = loginPage.loginsuccessful();
+        Assert.assertTrue(actualError);
 	}
-
+	
 }
