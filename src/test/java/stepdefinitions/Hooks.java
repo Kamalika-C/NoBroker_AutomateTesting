@@ -9,6 +9,7 @@ import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
+import pages.LoginPage;
 import utils.Base;
 
 public class Hooks extends Base {
@@ -16,6 +17,8 @@ public class Hooks extends Base {
 	static ExtentSparkReporter spark;
 	static ExtentReports extReports;
 	static ExtentTest extTest;
+	
+	LoginPage loginPage;
 	
 	@BeforeAll
 	public static void beforeAll(){
@@ -30,11 +33,20 @@ public class Hooks extends Base {
 	}
 	
 	@Before
-	public void setup(Scenario scenario){
-		lanchBrowser();
-		extTest=extReports.createTest(scenario.getName());
+	public void setup(Scenario scenario) {
+	    lanchBrowser();
+	    extTest=extReports.createTest(scenario.getName());
 	}
 	
+	@Before("@home")
+	public void loginBeforeHome(Scenario scenario) {
+		loginPage = new LoginPage(driver, extTest);
+		loginPage.clickLogin();
+		loginPage.enterMobileNumber("7812886595");  
+		loginPage.enterOtpManually(driver); 
+		loginPage.clickContinue();
+	}
+
 	@After
 	public static void tearDown(){
 		Base.sleep();

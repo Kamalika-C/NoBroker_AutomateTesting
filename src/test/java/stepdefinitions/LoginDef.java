@@ -11,7 +11,7 @@ import io.cucumber.java.en.When;
 import pages.LoginPage;
 import utils.Base;
 
-public class MainDef {
+public class LoginDef {
 
 	WebDriver driver = Hooks.driver;
 	ExtentTest extTest = Hooks.extTest;
@@ -25,11 +25,12 @@ public class MainDef {
 		Assert.assertEquals(actResult, expResult);
 	}
 
-	@When("the user enters a invalid phone number")
-	public void the_user_enters_a_invalid_phone_number() {
+	// scenario--1
+	@When("the user enters a invalid phone number {string}")
+	public void the_user_enters_a_invalid_phone_number(String phoneNumber) {
 		loginPage = new LoginPage(driver, extTest);
 		loginPage.clickLogin();
-		loginPage.enterMobileNumber("5763394");
+		loginPage.enterMobileNumber(phoneNumber);
 		loginPage.clickContinue();
 	}
 	
@@ -38,17 +39,18 @@ public class MainDef {
 		boolean actualError = loginPage.getNumErrorMessage();
         Assert.assertTrue(actualError);
 	}
-
-	@When("the user enters a valid phone number")
-	public void the_user_enters_a_valid_phone_number() {
+	
+	// scenario--2
+	@When("the user enters a valid phone number {string}")
+	public void the_user_enters_a_valid_phone_number(String phoneNumber) {
 		loginPage = new LoginPage(driver, extTest);
 		loginPage.clickLogin();
-		loginPage.enterMobileNumber("7812886595");  
+		loginPage.enterMobileNumber(phoneNumber);  
 	}
 	
-	@When("the user enters the invalid OTP")
-	public void the_user_enters_the_invalid_otp() {
-		loginPage.enterOtp("573852");
+	@When("the user enters the invalid OTP {string}")
+	public void the_user_enters_the_invalid_otp(String otp) {
+		loginPage.enterOtp(otp);
 		loginPage.clickContinue();
 	}
 	
@@ -58,6 +60,12 @@ public class MainDef {
         Assert.assertTrue(actualError);
 	}
 
+	// scenario--3
+	@When("waits until the OTP expires and clicks on resend button")
+	public void waits_until_the_otp_expires_and_clicks_on_resend_button() {
+	    loginPage.clickResendOtp();
+	}
+	
 	@When("the user enters the valid OTP")
 	public void the_user_enters_the_valid_otp() {
 		loginPage.enterOtpManually(driver); 
@@ -66,6 +74,7 @@ public class MainDef {
 		Base.sleep();
 	}
 
+	// scenario--4
 	@Then("the user should be logged in successfully")
 	public void the_user_should_be_logged_in_successfully() {
 		boolean actualError = loginPage.loginsuccessful();

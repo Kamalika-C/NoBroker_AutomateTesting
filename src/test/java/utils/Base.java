@@ -14,7 +14,7 @@ public class Base {
 	static final int TIME=2000;
 	public static WebDriver driver;
 
-	public void lanchBrowser() {
+	public static void lanchBrowser() {
 
 		Properties prop = PropertyReader.readProperties();
 
@@ -37,6 +37,7 @@ public class Base {
 		}
 		driver.get(prop.getProperty("URL"));
 	}
+	
 	public static void sleep(){
 		try {
 			Thread.sleep(TIME);
