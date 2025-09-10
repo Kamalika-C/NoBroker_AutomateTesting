@@ -28,15 +28,13 @@ public class HomePage {
 
 	public void selectCity(String cityName) {
 		try {
-			// Click the dropdown to open options
 			wait.until(ExpectedConditions.elementToBeClickable(By.id("searchCity"))).click();
 
-			// Wait for options to appear and select the desired city
-			wait.until(ExpectedConditions.elementToBeClickable(
-					By.xpath("//div[contains(@class,'nb-select__menu')]//div[text()='" + cityName + "']"))).click();
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'nb-select__menu')]//div[text()='" + cityName + "']"))).click();
 
 			extTest.log(Status.PASS, "City selected: " + cityName);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			extTest.log(Status.FAIL, "Failed to select city: " + e.getMessage());
 		}
 	}
@@ -53,7 +51,8 @@ public class HomePage {
 			localityInput.sendKeys(Keys.ENTER);
 
 			extTest.log(Status.PASS, "Locality selected: " + locality);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			extTest.log(Status.FAIL, "Failed to select locality: " + e.getMessage());
 		}
 	}
@@ -63,7 +62,8 @@ public class HomePage {
 			driver.findElement(Locators.searchButton).click();
 
 			extTest.log(Status.PASS, "Search button clicked successfully");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			extTest.log(Status.FAIL, "Failed to click search button: " + e.getMessage());
 		}
 	}
@@ -73,7 +73,8 @@ public class HomePage {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("alertMessageBox")));
 			extTest.log(Status.PASS, "Alert message displayed");
 			return true;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			extTest.log(Status.FAIL, "Error message not displayed: " + e.getMessage());
 			return false;
 		}
@@ -84,7 +85,8 @@ public class HomePage {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@itemprop='item']")));
 			extTest.log(Status.PASS, "Redirected sucessfully");
 			return true;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			extTest.log(Status.FAIL, "Fail to redirect" + e.getMessage());
 			return false;
 		}
@@ -94,7 +96,8 @@ public class HomePage {
 		try {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(Locators.historySection));
 			return true;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			return false;
 		}
 	}
@@ -103,7 +106,8 @@ public class HomePage {
 		try {
 			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//span[text()='" + locality + ", " + location + "']")));
 			return true;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			return false;
 		}
 	}

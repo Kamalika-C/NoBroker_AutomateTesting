@@ -16,27 +16,36 @@ public class Base {
 
 	public static void lanchBrowser() {
 
-		Properties prop = PropertyReader.readProperties();
+	    Properties prop = PropertyReader.readProperties();
 
-		if (prop.getProperty("Browser").equalsIgnoreCase("chrome")) {
-			ChromeOptions chromeOptions = new ChromeOptions();
-			Map<String, Object> chromePrefs = new HashMap<>();
-			chromePrefs.put("credentials_enable_service", false);
-			// chromePrefs.put("profile.password_manager_enabled", false);
-			chromePrefs.put("profile.password_manager_leak_detection", false);
-			chromeOptions.setExperimentalOption("prefs", chromePrefs);
+	    if (prop.getProperty("Browser").equalsIgnoreCase("chrome")) {
+	        ChromeOptions chromeOptions = new ChromeOptions();
 
-			// Initialize ChromeDriver with the configured options
-			driver = new ChromeDriver(chromeOptions);
-			driver.manage().window().maximize();
-		}
-		
-		else if(prop.getProperty("Browser").equalsIgnoreCase("FireFox")) {
-			driver = new FirefoxDriver();
-			driver.manage().window().maximize();
-		}
-		driver.get(prop.getProperty("URL"));
+	        Map<String, Object> chromePrefs = new HashMap<>();
+	        chromePrefs.put("credentials_enable_service", false);
+	        chromePrefs.put("profile.password_manager_leak_detection", false);
+
+	        // 🚀 disable notification popups
+	        chromePrefs.put("profile.default_content_setting_values.notifications", 2);
+
+	        chromeOptions.setExperimentalOption("prefs", chromePrefs);
+
+	        // optional but safer
+	        chromeOptions.addArguments("--disable-notifications");
+
+	        // Initialize ChromeDriver with the configured options
+	        driver = new ChromeDriver(chromeOptions);
+	        driver.manage().window().maximize();
+	    }
+
+	    else if (prop.getProperty("Browser").equalsIgnoreCase("FireFox")) {
+	        driver = new FirefoxDriver();
+	        driver.manage().window().maximize();
+	    }
+
+	    driver.get(prop.getProperty("URL"));
 	}
+
 	
 	public static void sleep(){
 		try {

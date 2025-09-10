@@ -1,7 +1,5 @@
 package stepdefinitions;
 
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
